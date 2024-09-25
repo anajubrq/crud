@@ -1,9 +1,8 @@
 "use client"
 import React, { useState } from "react";
-
-import Header from "./header/header";
-import DataTable from "./table/dataTable";
 import { Post } from "@/components/BlogFormModal";
+import Header from "./header/Header";
+import DataTable from "./table/DataTable";
 
 
 
