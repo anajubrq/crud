@@ -1,7 +1,11 @@
 "use client"
 import React, { useState } from "react";
-import DataTable, { Post } from "./Table/DataTable";
-import Header from "./Header/Header";
+
+import Header from "./header/header";
+import DataTable from "./table/dataTable";
+import { Post } from "@/components/BlogFormModal";
+
+
 
 export default function Home() {
   const [allPosts, setAllPosts] = useState<Post[]>([]);
@@ -14,7 +18,13 @@ export default function Home() {
   return (
     <section>
       <Header setAllPosts={setAllPosts} />
-      <DataTable posts={allPosts} deletePost={deletePost} />
+      <DataTable
+        posts={allPosts}
+        deletePost={deletePost}
+        setAllPosts={setAllPosts}
+
+      />
+
     </section>
   );
 }

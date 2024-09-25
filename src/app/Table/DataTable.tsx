@@ -1,7 +1,8 @@
-"use client"
 import React, { useState } from "react";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ModalDelete } from "../Buttons/ModalDelete";
+import { ModalDelete } from "../buttons/modalDelete";
+import { Edit as EditPost } from "../[id]/edit"; 
+import ViewPost from "../viewPost/viewPost";
 
 export interface Post {
   id: number;
@@ -12,20 +13,23 @@ export interface Post {
 export interface DataTableProps {
   posts: Post[];
   deletePost: (id: number) => void;
+  setAllPosts: React.Dispatch<React.SetStateAction<Post[]>>;
 }
 
-export function DataTable({ posts, deletePost }: DataTableProps) {
+export function DataTable({ posts, deletePost, setAllPosts }: DataTableProps) {
   const [openDelete, setOpenDelete] = useState<boolean>(false);
+  const [postEdit, setPostEdit] = useState<Post | undefined>(undefined);
+  const [postView, setPostView] = useState<Post | undefined>(undefined);
 
   return (
-    <section className="mt-8 z-0">
-      <Table className="border-2 border-gray-400 rounded-lg w-full ">
-        <TableCaption className="text-[18px]">Posts recentes</TableCaption>
+    <section className="mt-8 z-0 ">
+      <Table className="border-2 border-gray-400 rounded-lg w-full">
+        <TableCaption className="text-[18px]">Recent Posts</TableCaption>
         <TableHeader className="bg-slate-300 rz">
           <TableRow>
             <TableHead className="text-[16px] px-4 py-2 h-9 uppercase flex flex-row justify-between">
-              <p>Título</p>
-              <p>Ações</p>
+              <p>Title</p>
+              <p>Actions</p>
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -38,12 +42,36 @@ export function DataTable({ posts, deletePost }: DataTableProps) {
                   <span className="text-[16px] text-gray-600">{post.body}</span>
                 </div>
               </TableCell>
-              <TableCell className="px-4 py-2 text-right">
-                <button onClick={() => setOpenDelete(!openDelete)}>  <img src="/images/delete.png" className="w-[25px]" alt="Delete" /></button>
+
+              <TableCell className="px-4 py-2 space-x-4 flex flex-row justify-center items-center">
+                <button onClick={() => setPostView(post)}>
+                  <img src="/images/view.png" className="w-[25px]" alt="View" />
+                </button>
+                {postView && (
+                  <ViewPost
+                    post={postView}
+                    setOpenView={() => setPostView(undefined)}
+                  />
+                )}
+
+                <button onClick={() => setPostEdit(post)}>
+                  <img src="/images/edit.png" className="w-[25px]" alt="Edit" />
+                </button>
+                {postEdit && (
+                  <EditPost
+                    post={postEdit}
+                    setOpenModalEdit={() => setPostEdit(undefined)}
+                    setAllPosts={setAllPosts}
+                  />
+                )}
+
+                <button onClick={() => setOpenDelete(!openDelete)}>
+                  <img src="/images/delete.png" className="w-[20px]" alt="Delete" />
+                </button>
                 <ModalDelete
                   isOpenDelete={openDelete}
                   setOpenDelete={setOpenDelete}
-                  deletePost={() => deletePost(post.id)} 
+                  deletePost={() => deletePost(post.id)}
                 />
               </TableCell>
             </TableRow>
