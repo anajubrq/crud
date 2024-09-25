@@ -7,7 +7,7 @@ interface ViewPostProps {
   post: Post;
   setOpenView: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
+// testets 
 export default function ViewPost({ post, setOpenView }: ViewPostProps) {
   return (
     <section className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center z-10 ">
