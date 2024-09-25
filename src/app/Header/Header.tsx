@@ -1,8 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import Modal from "../CreationScreen/DataCreation";
-import { Post } from "../Table/DataTable";
+import Modal, { Post } from "../creationScreen/dataCreation";
 
 function Header({ setAllPosts }: { setAllPosts: React.Dispatch<React.SetStateAction<Post[]>> }) {
   const [openModal, setOpenModal] = useState(false);
